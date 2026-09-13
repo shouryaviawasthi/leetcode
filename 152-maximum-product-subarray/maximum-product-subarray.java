@@ -1,19 +1,21 @@
 class Solution {
     public int maxProduct(int[] nums) {
-        if(nums == null || nums.length == 0)
-        return 0;
-        
-        int globalMax = nums[0];
-        int prefixProd = 1, suffixProd = 1, n = nums.length;
-        for(int i =0; i<n; i++)
+        int maxP = nums[0];
+        int minP = nums[0];
+        int answer = nums[0];
+        for(int i=1;i<nums.length;i++)
         {
-            if(prefixProd == 0) prefixProd = 1;
-            if(suffixProd == 0) suffixProd = 1;
-             prefixProd *= nums[i];
-             suffixProd *= nums[n-1-i];
-
-             globalMax = Math.max(globalMax, Math.max(prefixProd, suffixProd));
+            int num = nums[i];
+            if(num<0)
+            {
+                int temp = maxP;
+                maxP = minP;
+                minP = temp;
+            }
+            maxP = Math.max(num, maxP*num);
+            minP = Math.min(num, minP*num);
+            answer = Math.max(answer, maxP);
         }
-        return globalMax;
+        return answer;
     }
 }
