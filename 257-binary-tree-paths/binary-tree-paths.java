@@ -16,23 +16,21 @@
 class Solution {
     public List<String> binaryTreePaths(TreeNode root) {
         List<String> paths = new ArrayList<>();
-        if(root !=null){
-            dfs(root, "", paths);
+        if (root != null) {
+            findPaths(root, "", paths);
         }
         return paths;
     }
-    private void dfs(TreeNode node, String currPath, List<String> paths)
-    {
-       if (node.left == null && node.right == null) {
-            paths.add(currPath + node.val);
-            return;
+
+    private void findPaths(TreeNode node, String currentPath, List<String> paths) {
+        currentPath += Integer.toString(node.val);
+        
+        if(node.left == null && node.right == null) {
+            paths.add(currentPath);
+        } else {
+            currentPath += "->";
+            if (node.left != null) findPaths(node.left, currentPath, paths);
+            if (node.right != null) findPaths(node.right, currentPath, paths);
         }
-        currPath += node.val + "->";
-        if (node.left != null) {
-            dfs(node.left, currPath, paths);
-        }
-        if (node.right != null) {
-            dfs(node.right, currPath, paths);
-        } 
     }
-}
+        }
